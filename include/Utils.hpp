@@ -10,3 +10,6 @@ template <typename... ArgType> inline void log(ArgType&&... args) {
 }
 
 #define LOG log
+
+#include <boost/locale.hpp>
+#define convert(text) boost::locale::conv::to_utf<wchar_t>(text,"ru_RU.utf8")

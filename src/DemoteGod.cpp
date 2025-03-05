@@ -8,16 +8,13 @@
 #include "Utils.hpp"
 
 birja::Result birja::db::demote_god(std::int64_t group_id, std::int64_t chat_id) {
-    rocksdb::DB* db;
-    rocksdb::Options opt;
-    opt.create_if_missing = false;
+    auto gods = db::get_gods(group_id);
+    if (!gods.ok)
+        return {false, gods.message, nullptr};
 
-    auto open_result = rocksdb::DB::Open(opt, std::filesystem::path(DBPATH) / std::to_string(group_id), &db);
-    if (!open_result.ok()) {
-        LOG(__FUNCTION__, ": Failed to open db at ", std::filesystem::path(DBPATH) / std::to_string(group_id), ": ", open_result.ToString());
-        return {false, "Не удалось подключиться к базе данных: " + open_result.ToString(), nullptr};
-    }
-
+    auto gods_v = std::get<std::vector<std::int64_t>>(gods.value);
+    if (std::find(gods_v.begin(), gods_v.end(), chat_id) == gods_v.end())
+        return {true, "Пользователь " + convert_chatid_to_username(group_id, chat_id) + " не является богом", nullptr};
     auto user_result = get_user(group_id, chat_id);
     if (!user_result.ok)
         return {false, user_result.message, nullptr};

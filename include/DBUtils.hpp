@@ -1,9 +1,15 @@
 #pragma once
 
+#include <lmdb.h>
+
 #include "Types.hpp"
 
 namespace birja {
     namespace db {
+        inline void lmdb_close_instance(MDB_dbi& db, MDB_env* env) {
+            mdb_dbi_close(env, db);
+        }
+
         std::int64_t convert_username_to_chatid(std::int64_t group_id, const std::string& username);
         std::string convert_chatid_to_username(std::int64_t group_id, std::int64_t chat_id);
 

@@ -3,8 +3,6 @@
 #include <filesystem>
 
 #include <lmdb.h>
-
-#include <rocksdb/db.h>
 #include <boost/json.hpp>
 
 birja::Result birja::db::add_user(std::int64_t group_id, birja::User user) {

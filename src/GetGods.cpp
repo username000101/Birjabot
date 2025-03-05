@@ -3,10 +3,7 @@
 #include <filesystem>
 #include <memory>
 
-#include <rocksdb/db.h>
 #include <boost/json.hpp>
-
-#include "Utils.hpp"
 
 birja::Result birja::db::get_gods(std::int64_t group_id) {
     std::filesystem::path dbdir = std::filesystem::path(DBPATH) / std::to_string(group_id);

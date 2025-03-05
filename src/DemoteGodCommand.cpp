@@ -1,7 +1,5 @@
 #include "Command.hpp"
 
-#include <boost/locale.hpp>
-
 #include "DBUtils.hpp"
 #include "Utils.hpp"
 
